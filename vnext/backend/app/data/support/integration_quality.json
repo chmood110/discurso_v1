@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-04-19T02:27:13Z",
+  "checks": [
+    {
+      "check": "municipios integrados",
+      "value": 60,
+      "status": "ok"
+    },
+    {
+      "check": "municipios proyecto actual",
+      "value": 57,
+      "status": "warning"
+    },
+    {
+      "check": "localidades AGEEML",
+      "value": 1745,
+      "status": "ok"
+    },
+    {
+      "check": "localidades ITER",
+      "value": 1260,
+      "status": "partial"
+    },
+    {
+      "check": "cruce AGEEML-ITER",
+      "value": 1132,
+      "status": "partial"
+    },
+    {
+      "check": "solo AGEEML",
+      "value": 613,
+      "status": "note"
+    },
+    {
+      "check": "solo ITER",
+      "value": 128,
+      "status": "note"
+    }
+  ],
+  "summary": {
+    "municipalities_integrated": 60,
+    "neighborhoods_integrated": 1745,
+    "territorial_profiles_available": 60,
+    "project_fit_mapping_rows": 60
+  }
+}

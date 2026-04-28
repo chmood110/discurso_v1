@@ -1,0 +1,17 @@
+{
+  "version": "2024.4",
+  "municipalities_count": 60,
+  "generated_at": "2026-04-19",
+  "hash": "b71c4e9f3a2d8f1a",
+  "data_sources": {
+    "population": "INEGI Censo de Población y Vivienda 2020",
+    "poverty": "CONEVAL Medición de Pobreza Municipal 2020",
+    "infrastructure": "INEGI Censo 2020 (ITER 29)",
+    "transfers": "INEGI Generador Fichas Municipales 2024"
+  },
+  "coverage": {
+    "total_tlaxcala_official": 60,
+    "in_dataset": 60,
+    "note": "Cobertura completa de los 60 municipios oficiales de Tlaxcala"
+  }
+}

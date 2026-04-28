@@ -1,0 +1,542 @@
+[
+  {
+    "municipality_id": "TLX-AMA",
+    "cve_municipio": 29001,
+    "municipio": "Amaxac de Guerrero",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Amaxac de Guerrero",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-AYA",
+    "cve_municipio": 29002,
+    "municipio": "Apetatitlán de Antonio Carvajal",
+    "region": "Valle Central",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Apetatitlán de Antonio Carvajal",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-ATL",
+    "cve_municipio": 29003,
+    "municipio": "Atlangatepec",
+    "region": "Sierra Norte",
+    "category": "municipio_rural",
+    "project_name_existing": "Atlangatepec",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-ATZ",
+    "cve_municipio": 29004,
+    "municipio": "Atltzayanca",
+    "region": "Llanos de Apan",
+    "category": "municipio_rural",
+    "project_name_existing": "Atltzayanca",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-APZ",
+    "cve_municipio": 29005,
+    "municipio": "Apizaco",
+    "region": "Valle Central",
+    "category": "ciudad",
+    "project_name_existing": "Apizaco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-CAL",
+    "cve_municipio": 29006,
+    "municipio": "Calpulalpan",
+    "region": "Llanos de Apan",
+    "category": "ciudad",
+    "project_name_existing": "Calpulalpan",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-ELC",
+    "cve_municipio": 29007,
+    "municipio": "El Carmen Tequexquitla",
+    "region": "Sierra Oriente",
+    "category": "municipio_rural",
+    "project_name_existing": "El Carmen Tequexquitla",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-CUP",
+    "cve_municipio": 29008,
+    "municipio": "Cuapiaxtla",
+    "region": "Llanos de Apan",
+    "category": "municipio_rural",
+    "project_name_existing": "Cuapiaxtla",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-CUA",
+    "cve_municipio": 29009,
+    "municipio": "Cuaxomulco",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Cuaxomulco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-CHT",
+    "cve_municipio": 29010,
+    "municipio": "Chiautempan",
+    "region": "Valle Central",
+    "category": "ciudad",
+    "project_name_existing": "Santa Ana Chiautempan",
+    "match_status": "alias_or_normalized"
+  },
+  {
+    "municipality_id": "TLX-MUÑ",
+    "cve_municipio": 29011,
+    "municipio": "Muñoz de Domingo Arenas",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Muñoz de Domingo Arenas",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-ESP",
+    "cve_municipio": 29012,
+    "municipio": "Españita",
+    "region": "Sierra Norte",
+    "category": "municipio_rural",
+    "project_name_existing": "Españita",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-HMT",
+    "cve_municipio": 29013,
+    "municipio": "Huamantla",
+    "region": "Llanos de Apan",
+    "category": "ciudad",
+    "project_name_existing": "Huamantla",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-HEY",
+    "cve_municipio": 29014,
+    "municipio": "Hueyotlipan",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Hueyotlipan",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-IXC",
+    "cve_municipio": 29015,
+    "municipio": "Ixtacuixtla de Mariano Matamoros",
+    "region": "Valle Central",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Ixtacuixtla de Mariano Matamoros",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-IXP",
+    "cve_municipio": 29016,
+    "municipio": "Ixtenco",
+    "region": "Llanos de Apan",
+    "category": "municipio_rural",
+    "project_name_existing": "Ixtenco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-MJH",
+    "cve_municipio": 29017,
+    "municipio": "Mazatecochco de José María Morelos",
+    "region": "Suroeste",
+    "category": "municipio_rural",
+    "project_name_existing": "Mazatecochco de José María Morelos",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-CTC",
+    "cve_municipio": 29018,
+    "municipio": "Contla de Juan Cuamatzi",
+    "region": "Valle Central",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Contla de Juan Cuamatzi",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TEP",
+    "cve_municipio": 29019,
+    "municipio": "Tepetitla de Lardizábal",
+    "region": "provisional",
+    "category": "municipio",
+    "project_name_existing": null,
+    "match_status": "new_or_missing_in_project"
+  },
+  {
+    "municipality_id": "TLX-SFT",
+    "cve_municipio": 29020,
+    "municipio": "Sanctórum de Lázaro Cárdenas",
+    "region": "Llanos de Apan",
+    "category": "municipio_rural",
+    "project_name_existing": "Sanctórum de Lázaro Cárdenas",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-NAN",
+    "cve_municipio": 29021,
+    "municipio": "Nanacamilpa de Mariano Arista",
+    "region": "Sierra Norte",
+    "category": "municipio_rural",
+    "project_name_existing": "Nanacamilpa de Mariano Arista",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-AOC",
+    "cve_municipio": 29022,
+    "municipio": "Acuamanala de Miguel Hidalgo",
+    "region": "Suroeste",
+    "category": "municipio_rural",
+    "project_name_existing": "Acuamanala de Miguel Hidalgo",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-NAT",
+    "cve_municipio": 29023,
+    "municipio": "Natívitas",
+    "region": "Suroeste",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Nativitas",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-PAN",
+    "cve_municipio": 29024,
+    "municipio": "Panotla",
+    "region": "provisional",
+    "category": "municipio",
+    "project_name_existing": null,
+    "match_status": "new_or_missing_in_project"
+  },
+  {
+    "municipality_id": "TLX-SLD",
+    "cve_municipio": 29025,
+    "municipio": "San Pablo del Monte",
+    "region": "Suroeste",
+    "category": "ciudad",
+    "project_name_existing": "San Pablo del Monte",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SPC",
+    "cve_municipio": 29026,
+    "municipio": "Santa Cruz Tlaxcala",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Santa Cruz Tlaxcala",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TEN",
+    "cve_municipio": 29027,
+    "municipio": "Tenancingo",
+    "region": "Suroeste",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Tenancingo",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TND",
+    "cve_municipio": 29028,
+    "municipio": "Teolocholco",
+    "region": "Suroeste",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Teolocholco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TPC",
+    "cve_municipio": 29029,
+    "municipio": "Tepeyanco",
+    "region": "Suroeste",
+    "category": "municipio_rural",
+    "project_name_existing": "Tepeyanco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TPI",
+    "cve_municipio": 29030,
+    "municipio": "Terrenate",
+    "region": "Llanos de Apan",
+    "category": "municipio_rural",
+    "project_name_existing": "Terrenate",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TET",
+    "cve_municipio": 29031,
+    "municipio": "Tetla de la Solidaridad",
+    "region": "provisional",
+    "category": "municipio",
+    "project_name_existing": null,
+    "match_status": "new_or_missing_in_project"
+  },
+  {
+    "municipality_id": "TLX-TZA",
+    "cve_municipio": 29032,
+    "municipio": "Tetlatlahuca",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Tetlatlahuca",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TLA",
+    "cve_municipio": 29033,
+    "municipio": "Tlaxcala",
+    "region": "Valle Central",
+    "category": "ciudad",
+    "project_name_existing": "Tlaxcala de Xicohténcatl",
+    "match_status": "alias_or_normalized"
+  },
+  {
+    "municipality_id": "TLX-TLC",
+    "cve_municipio": 29034,
+    "municipio": "Tlaxco",
+    "region": "Sierra Norte",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Tlaxco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TLO",
+    "cve_municipio": 29035,
+    "municipio": "Tocatlán",
+    "region": "Suroeste",
+    "category": "municipio_rural",
+    "project_name_existing": "Tocatlán",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TTO",
+    "cve_municipio": 29036,
+    "municipio": "Totolac",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Totolac",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TZT",
+    "cve_municipio": 29037,
+    "municipio": "Ziltlaltépec de Trinidad Sánchez Santos",
+    "region": "Llanos de Apan",
+    "category": "municipio_rural",
+    "project_name_existing": "Ziltlaltépec de Trinidad Sánchez Santos",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TZM",
+    "cve_municipio": 29038,
+    "municipio": "Tzompantepec",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Tzompantepec",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-XAL",
+    "cve_municipio": 29039,
+    "municipio": "Xaloztoc",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Xaloztoc",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-XAM",
+    "cve_municipio": 29040,
+    "municipio": "Xaltocan",
+    "region": "Sierra Norte",
+    "category": "municipio_rural",
+    "project_name_existing": "Xaltocan",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-PAP",
+    "cve_municipio": 29041,
+    "municipio": "Papalotla de Xicohténcatl",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Papalotla de Xicohténcatl",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-XAT",
+    "cve_municipio": 29042,
+    "municipio": "Xicohtzinco",
+    "region": "Suroeste",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Xicohtzinco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-YAU",
+    "cve_municipio": 29043,
+    "municipio": "Yauhquemehcan",
+    "region": "Valle Central",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Yauhquemehcan",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-ZAC",
+    "cve_municipio": 29044,
+    "municipio": "Zacatelco",
+    "region": "Suroeste",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Zacatelco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-BOH",
+    "cve_municipio": 29045,
+    "municipio": "Benito Juárez",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Benito Juárez",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-EMZ",
+    "cve_municipio": 29046,
+    "municipio": "Emiliano Zapata",
+    "region": "Valle Central",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Emiliano Zapata",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-LRD",
+    "cve_municipio": 29047,
+    "municipio": "Lázaro Cárdenas",
+    "region": "Valle Central",
+    "category": "municipio_semiurbano",
+    "project_name_existing": "Lázaro Cárdenas",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-LAM",
+    "cve_municipio": 29048,
+    "municipio": "La Magdalena Tlaltelulco",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "La Magdalena Tlaltelulco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-TEX",
+    "cve_municipio": 29049,
+    "municipio": "San Damián Texóloc",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Texoloc",
+    "match_status": "alias_or_normalized"
+  },
+  {
+    "municipality_id": "TLX-SEB",
+    "cve_municipio": 29050,
+    "municipio": "San Francisco Tetlanohcan",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "San Francisco Tetlanohcan",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SJB",
+    "cve_municipio": 29051,
+    "municipio": "San Jerónimo Zacualpan",
+    "region": "Sierra Norte",
+    "category": "municipio_rural",
+    "project_name_existing": "San Jerónimo Zacualpan",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SJC",
+    "cve_municipio": 29052,
+    "municipio": "San José Teacalco",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "San José Teacalco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SJG",
+    "cve_municipio": 29053,
+    "municipio": "San Juan Huactzinco",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "San Juan Huactzinco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SLS",
+    "cve_municipio": 29054,
+    "municipio": "San Lorenzo Axocomanitla",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "San Lorenzo Axocomanitla",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SLC",
+    "cve_municipio": 29055,
+    "municipio": "San Lucas Tecopilco",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "San Lucas Tecopilco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-NOP",
+    "cve_municipio": 29056,
+    "municipio": "Santa Ana Nopalucan",
+    "region": "provisional",
+    "category": "municipio",
+    "project_name_existing": null,
+    "match_status": "new_or_missing_in_project"
+  },
+  {
+    "municipality_id": "TLX-SPB",
+    "cve_municipio": 29057,
+    "municipio": "Santa Apolonia Teacalco",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Santa Apolonia Teacalco",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SCT",
+    "cve_municipio": 29058,
+    "municipio": "Santa Catarina Ayometla",
+    "region": "Suroeste",
+    "category": "municipio_rural",
+    "project_name_existing": "Santa Catarina Ayometla",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SCR",
+    "cve_municipio": 29059,
+    "municipio": "Santa Cruz Quilehtla",
+    "region": "Suroeste",
+    "category": "municipio_rural",
+    "project_name_existing": "Santa Cruz Quilehtla",
+    "match_status": "exact_or_preserved_id"
+  },
+  {
+    "municipality_id": "TLX-SIT",
+    "cve_municipio": 29060,
+    "municipio": "Santa Isabel Xiloxoxtla",
+    "region": "Valle Central",
+    "category": "municipio_rural",
+    "project_name_existing": "Santa Isabel Xiloxoxtla",
+    "match_status": "exact_or_preserved_id"
+  }
+]

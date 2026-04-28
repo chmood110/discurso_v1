@@ -1,0 +1,518 @@
+[
+  {
+    "id": "TLX-AMA",
+    "name": "Amaxac de Guerrero",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 11467
+  },
+  {
+    "id": "TLX-AOC",
+    "name": "Acuamanala de Miguel Hidalgo",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Suroeste",
+    "population_2020": 8480
+  },
+  {
+    "id": "TLX-APZ",
+    "name": "Apizaco",
+    "state_id": "TLX",
+    "category": "ciudad",
+    "region": "Valle Central",
+    "population_2020": 79196
+  },
+  {
+    "id": "TLX-ATL",
+    "name": "Atlangatepec",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Sierra Norte",
+    "population_2020": 12186
+  },
+  {
+    "id": "TLX-ATZ",
+    "name": "Atltzayanca",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Llanos de Apan",
+    "population_2020": 19258
+  },
+  {
+    "id": "TLX-AYA",
+    "name": "Apetatitlán de Antonio Carvajal",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Valle Central",
+    "population_2020": 19769
+  },
+  {
+    "id": "TLX-BOH",
+    "name": "Benito Juárez",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 15785
+  },
+  {
+    "id": "TLX-CAL",
+    "name": "Calpulalpan",
+    "state_id": "TLX",
+    "category": "ciudad",
+    "region": "Llanos de Apan",
+    "population_2020": 57308
+  },
+  {
+    "id": "TLX-CHT",
+    "name": "Santa Ana Chiautempan",
+    "state_id": "TLX",
+    "category": "ciudad",
+    "region": "Valle Central",
+    "population_2020": 55674
+  },
+  {
+    "id": "TLX-CTC",
+    "name": "Contla de Juan Cuamatzi",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Valle Central",
+    "population_2020": 37040
+  },
+  {
+    "id": "TLX-CUA",
+    "name": "Cuaxomulco",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 8010
+  },
+  {
+    "id": "TLX-CUP",
+    "name": "Cuapiaxtla",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Llanos de Apan",
+    "population_2020": 17843
+  },
+  {
+    "id": "TLX-ELC",
+    "name": "El Carmen Tequexquitla",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Sierra Oriente",
+    "population_2020": 8642
+  },
+  {
+    "id": "TLX-EMZ",
+    "name": "Emiliano Zapata",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Valle Central",
+    "population_2020": 26166
+  },
+  {
+    "id": "TLX-ESP",
+    "name": "Españita",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Sierra Norte",
+    "population_2020": 8937
+  },
+  {
+    "id": "TLX-HEY",
+    "name": "Hueyotlipan",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 11620
+  },
+  {
+    "id": "TLX-HMT",
+    "name": "Huamantla",
+    "state_id": "TLX",
+    "category": "ciudad",
+    "region": "Llanos de Apan",
+    "population_2020": 84977
+  },
+  {
+    "id": "TLX-IXC",
+    "name": "Ixtacuixtla de Mariano Matamoros",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Valle Central",
+    "population_2020": 37030
+  },
+  {
+    "id": "TLX-IXP",
+    "name": "Ixtenco",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Llanos de Apan",
+    "population_2020": 10285
+  },
+  {
+    "id": "TLX-LAM",
+    "name": "La Magdalena Tlaltelulco",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 16403
+  },
+  {
+    "id": "TLX-LRD",
+    "name": "Lázaro Cárdenas",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Valle Central",
+    "population_2020": 23736
+  },
+  {
+    "id": "TLX-MJH",
+    "name": "Mazatecochco de José María Morelos",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Suroeste",
+    "population_2020": 12889
+  },
+  {
+    "id": "TLX-MUÑ",
+    "name": "Muñoz de Domingo Arenas",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 7052
+  },
+  {
+    "id": "TLX-NAN",
+    "name": "Nanacamilpa de Mariano Arista",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Sierra Norte",
+    "population_2020": 13244
+  },
+  {
+    "id": "TLX-NAT",
+    "name": "Nativitas",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Suroeste",
+    "population_2020": 28580
+  },
+  {
+    "id": "TLX-PAN",
+    "name": "Panotla",
+    "state_id": "TLX",
+    "population_2020": 28357,
+    "population_source": "INEGI Censo 2020",
+    "inegi_code": "29024",
+    "category": "municipio_semiurbano",
+    "region": "Valle Central",
+    "poverty_rate_2020": 44.3,
+    "extreme_poverty_rate_2020": 6.2,
+    "marginalization_2020": "medio",
+    "internet_access_pct_2020": 41.0,
+    "avg_schooling_years_2020": 9.8,
+    "pct_indigenous_speakers_2020": 0.4,
+    "pct_rural_2020": 46.3,
+    "latitude": 19.2896,
+    "longitude": -98.2027,
+    "fismdf_transfer_2024_mxn": 19205780
+  },
+  {
+    "id": "TLX-PAP",
+    "name": "Papalotla de Xicohténcatl",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 13574
+  },
+  {
+    "id": "TLX-SAB",
+    "name": "San Damián Texóloc",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 10286
+  },
+  {
+    "id": "TLX-SCR",
+    "name": "Santa Cruz Quilehtla",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Suroeste",
+    "population_2020": 8720
+  },
+  {
+    "id": "TLX-SCT",
+    "name": "Santa Catarina Ayometla",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Suroeste",
+    "population_2020": 7779
+  },
+  {
+    "id": "TLX-SEB",
+    "name": "San Francisco Tetlanohcan",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 16534
+  },
+  {
+    "id": "TLX-SFT",
+    "name": "Sanctórum de Lázaro Cárdenas",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Llanos de Apan",
+    "population_2020": 13280
+  },
+  {
+    "id": "TLX-SIT",
+    "name": "Santa Isabel Xiloxoxtla",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 8072
+  },
+  {
+    "id": "TLX-SJB",
+    "name": "San Jerónimo Zacualpan",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Sierra Norte",
+    "population_2020": 5816
+  },
+  {
+    "id": "TLX-SJC",
+    "name": "San José Teacalco",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 7684
+  },
+  {
+    "id": "TLX-SJG",
+    "name": "San Juan Huactzinco",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 7944
+  },
+  {
+    "id": "TLX-SLC",
+    "name": "San Lucas Tecopilco",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 7014
+  },
+  {
+    "id": "TLX-SLD",
+    "name": "San Pablo del Monte",
+    "state_id": "TLX",
+    "category": "ciudad",
+    "region": "Suroeste",
+    "population_2020": 87330
+  },
+  {
+    "id": "TLX-SLS",
+    "name": "San Lorenzo Axocomanitla",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 8481
+  },
+  {
+    "id": "TLX-SPB",
+    "name": "Santa Apolonia Teacalco",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 8036
+  },
+  {
+    "id": "TLX-SPC",
+    "name": "Santa Cruz Tlaxcala",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 16578
+  },
+  {
+    "id": "TLX-TEN",
+    "name": "Tenancingo",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Suroeste",
+    "population_2020": 20754
+  },
+  {
+    "id": "TLX-TEP",
+    "name": "Tepetitla de Lardizábal",
+    "state_id": "TLX",
+    "population_2020": 22274,
+    "population_source": "INEGI Censo 2020",
+    "inegi_code": "29019",
+    "category": "municipio_semiurbano",
+    "region": "Suroeste",
+    "poverty_rate_2020": 72.1,
+    "extreme_poverty_rate_2020": 11.2,
+    "marginalization_2020": "alto",
+    "internet_access_pct_2020": 28.5,
+    "avg_schooling_years_2020": 9.2,
+    "pct_indigenous_speakers_2020": 0.3,
+    "pct_rural_2020": 4.9,
+    "latitude": 19.2285,
+    "longitude": -98.1628,
+    "fismdf_transfer_2024_mxn": 17834520
+  },
+  {
+    "id": "TLX-TET",
+    "name": "Tetla de la Solidaridad",
+    "state_id": "TLX",
+    "population_2020": 34246,
+    "population_source": "INEGI Censo 2020",
+    "inegi_code": "29031",
+    "category": "municipio_semiurbano",
+    "region": "Valle Central",
+    "poverty_rate_2020": 53.4,
+    "extreme_poverty_rate_2020": 5.4,
+    "marginalization_2020": "medio",
+    "internet_access_pct_2020": 38.0,
+    "avg_schooling_years_2020": 9.5,
+    "pct_indigenous_speakers_2020": 0.2,
+    "pct_rural_2020": 8.8,
+    "latitude": 19.3527,
+    "longitude": -98.1083,
+    "fismdf_transfer_2024_mxn": 22614390
+  },
+  {
+    "id": "TLX-TEX",
+    "name": "Texoloc",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 7280
+  },
+  {
+    "id": "TLX-TLA",
+    "name": "Tlaxcala de Xicohténcatl",
+    "state_id": "TLX",
+    "category": "ciudad",
+    "region": "Valle Central",
+    "population_2020": 90009
+  },
+  {
+    "id": "TLX-TLC",
+    "name": "Tlaxco",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Sierra Norte",
+    "population_2020": 23448
+  },
+  {
+    "id": "TLX-TLO",
+    "name": "Tocatlán",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Suroeste",
+    "population_2020": 7133
+  },
+  {
+    "id": "TLX-TND",
+    "name": "Teolocholco",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Suroeste",
+    "population_2020": 23951
+  },
+  {
+    "id": "TLX-TPC",
+    "name": "Tepeyanco",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Suroeste",
+    "population_2020": 18234
+  },
+  {
+    "id": "TLX-TPI",
+    "name": "Terrenate",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Llanos de Apan",
+    "population_2020": 11957
+  },
+  {
+    "id": "TLX-TTO",
+    "name": "Totolac",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 17800
+  },
+  {
+    "id": "TLX-TZA",
+    "name": "Tetlatlahuca",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 14584
+  },
+  {
+    "id": "TLX-TZM",
+    "name": "Tzompantepec",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 18459
+  },
+  {
+    "id": "TLX-TZT",
+    "name": "Ziltlaltépec de Trinidad Sánchez Santos",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Llanos de Apan",
+    "population_2020": 10649
+  },
+  {
+    "id": "TLX-XAL",
+    "name": "Xaloztoc",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Valle Central",
+    "population_2020": 18938
+  },
+  {
+    "id": "TLX-XAM",
+    "name": "Xaltocan",
+    "state_id": "TLX",
+    "category": "municipio_rural",
+    "region": "Sierra Norte",
+    "population_2020": 15029
+  },
+  {
+    "id": "TLX-XAT",
+    "name": "Xicohtzinco",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Suroeste",
+    "population_2020": 15416
+  },
+  {
+    "id": "TLX-YAU",
+    "name": "Yauhquemehcan",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Valle Central",
+    "population_2020": 27869
+  },
+  {
+    "id": "TLX-ZAC",
+    "name": "Zacatelco",
+    "state_id": "TLX",
+    "category": "municipio_semiurbano",
+    "region": "Suroeste",
+    "population_2020": 36312
+  }
+]

@@ -1,0 +1,107 @@
+{
+  "dataset": "voxpolitica_tlaxcala_runtime",
+  "state": {
+    "id": "TLX",
+    "name": "Tlaxcala"
+  },
+  "generated_at": "2026-04-19T02:27:13Z",
+  "sources": [
+    {
+      "source_file": "AGEEML_20264181326856.csv",
+      "level": "localidad",
+      "rows": 1745,
+      "coverage": "60 municipios / 1,745 localidades",
+      "main_value": "Catálogo oficial de localidades, coordenadas, población y viviendas",
+      "fit_for_project": "base territorial maestra"
+    },
+    {
+      "source_file": "AGEEML_20264181327210.csv",
+      "level": "localidad",
+      "rows": 1745,
+      "coverage": "duplicado exacto",
+      "main_value": "Mismo contenido que AGEEML_20264181326856.csv",
+      "fit_for_project": "ignorar duplicado"
+    },
+    {
+      "source_file": "AGEEML_20264181326856(1).csv",
+      "level": "localidad",
+      "rows": 1745,
+      "coverage": "duplicado exacto",
+      "main_value": "Mismo contenido que AGEEML_20264181326856.csv",
+      "fit_for_project": "ignorar duplicado"
+    },
+    {
+      "source_file": "AGEEML_20264181327210(1).csv",
+      "level": "localidad",
+      "rows": 1745,
+      "coverage": "duplicado exacto",
+      "main_value": "Mismo contenido que AGEEML_20264181326856.csv",
+      "fit_for_project": "ignorar duplicado"
+    },
+    {
+      "source_file": "29_Tlaxcala_Generador_Ficha_Municipal.xlsm",
+      "level": "municipio",
+      "rows": 60,
+      "coverage": "60 municipios",
+      "main_value": "Pobreza 2020, carencias, FISMDF, contexto municipal",
+      "fit_for_project": "núcleo social municipal"
+    },
+    {
+      "source_file": "cpv_valor_29.csv",
+      "level": "municipio",
+      "rows": 20100,
+      "coverage": "60 municipios + series históricas",
+      "main_value": "Indicadores de censo 2020 en formato largo",
+      "fit_for_project": "demografía y vivienda"
+    },
+    {
+      "source_file": "IRS_2000_2015_vf.xlsx",
+      "level": "municipio",
+      "rows": 60,
+      "coverage": "60 municipios",
+      "main_value": "Rezago social histórico 2000-2015",
+      "fit_for_project": "histórico/benchmark"
+    },
+    {
+      "source_file": "ITER_29CSV20.csv",
+      "level": "localidad",
+      "rows": 1260,
+      "coverage": "1,260 localidades con datos de censo",
+      "main_value": "Variables censales por localidad",
+      "fit_for_project": "enriquecimiento parcial por localidad"
+    },
+    {
+      "source_file": "Hogares_15.xlsx",
+      "level": "estatal",
+      "rows": 1,
+      "coverage": "Tlaxcala estatal",
+      "main_value": "Serie pobreza 2016-2024",
+      "fit_for_project": "contexto estatal, no municipal"
+    },
+    {
+      "source_file": "Anexo_Pobreza_2018_2020_Tlaxcala.xlsx",
+      "level": "estatal",
+      "rows": 1,
+      "coverage": "Tlaxcala estatal",
+      "main_value": "Detalle metodológico 2018-2020",
+      "fit_for_project": "contexto/validación estatal"
+    }
+  ],
+  "duplicates_detected": [
+    {
+      "source_file": "AGEEML_20264181327210.csv",
+      "duplicate_of": "AGEEML_20264181326856.csv",
+      "status": "exact_duplicate"
+    },
+    {
+      "source_file": "AGEEML_20264181327210(1).csv",
+      "duplicate_of": "AGEEML_20264181326856.csv",
+      "status": "exact_duplicate"
+    },
+    {
+      "source_file": "AGEEML_20264181326856(1).csv",
+      "duplicate_of": "AGEEML_20264181326856.csv",
+      "status": "exact_duplicate"
+    }
+  ]
+}
