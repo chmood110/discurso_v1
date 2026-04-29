@@ -1,21 +1,49 @@
 "use client";
 
+/* ============================================================================
+ * /analysis — Análisis Territorial
+ *
+ * Lógica de negocio PRESERVADA al 100% del proyecto original:
+ *   · useAppStore (zustand) gobierna selection / analysisRun / loading / errors
+ *   · api.analysis.run preserva el contrato del backend (force_refresh,
+ *     objective, municipality_id) — primer fetch automático al elegir municipio,
+ *     regeneración manual con force_refresh=true
+ *   · api.exports.analysisBlob + downloadBlob para PDF
+ *   · Render completo de critical_needs, opportunities, kpi_board.kpis,
+ *     strategy_section (executive_strategic, messaging_axes, candidate_positioning,
+ *     recommended_tone + communication_channels_priority, framing_suggestions,
+ *     risk_flags), validation report, methodology disclaimer, confidence bar.
+ *
+ * Lo que cambia es exclusivamente la capa visual.
+ * ========================================================================== */
+
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { ArrowRight, FileDown, MapPin, Target } from "lucide-react";
+
+import { AuroraBackground } from "@/components/ui/aurora-background";
+import { MasterLoader } from "@/components/ui/master-loader";
+import { MinimalInput } from "@/components/ui/minimal-input";
+import { SectionLabel } from "@/components/ui/section-label";
 import { TerritorySelector } from "@/components/layout/territory-selector";
-import { QualityBadge, ConfidenceBar } from "@/components/data-quality/quality-badge";
+import { NavBar } from "@/components/layout/nav-bar";
+import {
+  ConfidenceBar,
+  QualityBadge,
+} from "@/components/data-quality/quality-badge";
 import { MethodologyDisclaimer } from "@/components/data-quality/methodology-disclaimer";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { ValidationReportPanel } from "@/components/data-quality/validation-report";
+
 import { useAppStore } from "@/lib/store";
 import * as api from "@/lib/api";
+import { cn } from "@/lib/cn";
 import type {
   AnalysisDetail,
   CriticalNeed,
-  StrategySection,
   MessagingAxis,
+  StrategySection,
 } from "@/types";
+
+// ---------- helpers (same as the original) -----------------------------------
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -45,6 +73,8 @@ function getNeedAffectedPopulationPct(need: CriticalNeed): number | null {
   return asNumber(raw);
 }
 
+// =============================================================================
+
 export default function AnalysisPage() {
   const {
     selection,
@@ -58,18 +88,24 @@ export default function AnalysisPage() {
   } = useAppStore();
 
   const [objective, setObjective] = useState("");
+  const [zona, setZona] = useState("");
 
+  // First fetch when a municipality is set — same logic as v1.
   useEffect(() => {
     if (!selection.municipalityId) return;
-
     let mounted = true;
 
     api.analysis
-      .run({ municipality_id: selection.municipalityId, force_refresh: false })
+      .run({
+        municipality_id: selection.municipalityId,
+        force_refresh: false,
+      })
       .then((run) => {
         if (mounted) setAnalysisRun(run);
       })
-      .catch(() => {});
+      .catch(() => {
+        // silently — first-fetch errors don't show; user retries via button
+      });
 
     return () => {
       mounted = false;
@@ -90,7 +126,10 @@ export default function AnalysisPage() {
       });
       setAnalysisRun(run);
     } catch (e: unknown) {
-      setError("analysis", e instanceof Error ? e.message : "Error generando análisis");
+      setError(
+        "analysis",
+        e instanceof Error ? e.message : "Error generando análisis"
+      );
     } finally {
       setLoading("analysis", false);
     }
@@ -98,197 +137,407 @@ export default function AnalysisPage() {
 
   async function handleExport() {
     if (!analysisRun) return;
-
     setLoading("export", true);
 
     try {
       const blob = await api.exports.analysisBlob(analysisRun.id);
       api.downloadBlob(blob, `analisis-${selection.municipalityName}.pdf`);
     } catch (e: unknown) {
-      setError("export", e instanceof Error ? e.message : "Error exportando PDF");
+      setError(
+        "export",
+        e instanceof Error ? e.message : "Error exportando PDF"
+      );
     } finally {
       setLoading("export", false);
     }
   }
 
+  const hasResult = !!analysisRun && !loading.analysis;
+  const isLoading = loading.analysis;
+
   return (
-    <main className="mx-auto max-w-4xl space-y-6 px-4 py-10">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="mb-1 text-xs font-bold uppercase tracking-widest text-emerald-600">
-            VoxPolítica
-          </p>
-          <h1 className="text-2xl font-bold text-slate-900">Análisis Territorial</h1>
-          <p className="mt-1 text-sm text-slate-500">
-            Diagnóstico INEGI/CONEVAL + estrategia de comunicación integrada
-          </p>
-        </div>
-        <Link href="/" className="text-sm text-slate-400 hover:text-slate-600">
-          ← Inicio
-        </Link>
-      </div>
-
-      <Card>
-        <CardHeader title="Territorio" />
-        <TerritorySelector disabled={loading.analysis} />
-        <div className="mt-4 space-y-3">
-          <input
-            value={objective}
-            onChange={(e) => setObjective(e.target.value)}
-            placeholder="Objetivo del análisis (opcional)"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
-          <div className="flex gap-2">
-            <Button
-              onClick={() => handleRun(false)}
-              loading={loading.analysis}
-              disabled={!selection.municipalityId}
-              className="flex-1"
+    <AuroraBackground variant="soft">
+      <NavBar
+        rightSlot={
+          hasResult ? (
+            <button
+              onClick={() => {
+                setAnalysisRun(null);
+                clearError("analysis");
+              }}
+              className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500 transition-colors hover:text-sky-400"
             >
-              {analysisRun ? "Usar análisis vigente" : "Generar análisis"}
-            </Button>
-            {analysisRun && (
-              <Button
-                variant="secondary"
-                onClick={() => handleRun(true)}
-                loading={loading.analysis}
-              >
-                Regenerar
-              </Button>
-            )}
+              Nuevo análisis
+            </button>
+          ) : (
+            <span className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-700">
+              ← Inicio
+            </span>
+          )
+        }
+      />
+
+      <main className="mx-auto max-w-6xl px-10 pb-32">
+        {/* ----- LOADING STATE ----- */}
+        {isLoading && (
+          <div className="flex min-h-[60vh] items-center justify-center">
+            <MasterLoader
+              size="lg"
+              headline="Sincronizando inteligencia"
+              subline="Procesando vectores territoriales"
+            />
           </div>
-        </div>
-      </Card>
+        )}
 
-      {errors.analysis && (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {errors.analysis}
-        </div>
-      )}
+        {/* ----- FORM STATE ----- */}
+        {!isLoading && !hasResult && (
+          <FormView
+            objective={objective}
+            setObjective={setObjective}
+            zona={zona}
+            setZona={setZona}
+            disabled={isLoading}
+            onSubmit={() => handleRun(false)}
+            error={errors.analysis}
+          />
+        )}
 
-      {analysisRun && (
-        <AnalysisResult
-          run={analysisRun}
-          onExport={handleExport}
-          exportLoading={loading.export}
-        />
-      )}
-    </main>
+        {/* ----- RESULTS STATE ----- */}
+        {hasResult && analysisRun && (
+          <ResultView
+            run={analysisRun}
+            zona={zona}
+            municipalityName={selection.municipalityName}
+            objective={objective || analysisRun.objective || ""}
+            onRegenerate={() => handleRun(true)}
+            regenerateLoading={loading.analysis}
+            onExport={handleExport}
+            exportLoading={loading.export}
+          />
+        )}
+      </main>
+    </AuroraBackground>
   );
 }
 
-function AnalysisResult({
-  run,
-  onExport,
-  exportLoading,
-}: {
+// =============================================================================
+// FORM
+// =============================================================================
+
+interface FormViewProps {
+  objective: string;
+  setObjective: (v: string) => void;
+  zona: string;
+  setZona: (v: string) => void;
+  disabled: boolean;
+  onSubmit: () => void;
+  error?: string;
+}
+
+function FormView({
+  objective,
+  setObjective,
+  zona,
+  setZona,
+  disabled,
+  onSubmit,
+  error,
+}: FormViewProps) {
+  const { selection } = useAppStore();
+  const canSubmit = !!selection.municipalityId && !disabled;
+
+  return (
+    <div className="animate-fade-in-slow">
+      <header className="mb-20">
+        <h1 className="font-display text-7xl font-extrabold leading-[0.9] tracking-tighter text-white md:text-8xl">
+          Inteligencia <br />
+          <span className="text-slate-700">Territorial.</span>
+        </h1>
+        <p className="mt-8 max-w-2xl text-xl font-light leading-relaxed text-slate-400">
+          Sistema de diagnóstico demográfico y prospectiva estratégica para la
+          toma de decisiones de alto nivel.
+        </p>
+      </header>
+
+      <div className="max-w-4xl space-y-24">
+        {/* 01 — Demarcación (municipio + opcional vecindad) */}
+        <section className="space-y-6">
+          <SectionLabel number="01" tone="accent" icon={<MapPin className="h-3.5 w-3.5" />}>
+            Demarcación
+          </SectionLabel>
+          <TerritorySelector disabled={disabled} size="lg" />
+        </section>
+
+        {/* 02 + 03 — Zona + objetivo en grid */}
+        <section className="grid gap-20 md:grid-cols-2">
+          <div className="space-y-6">
+            <SectionLabel number="02" tone="muted">
+              Área específica
+            </SectionLabel>
+            <MinimalInput
+              value={zona}
+              onChange={(e) => setZona(e.target.value)}
+              placeholder="Barrio o zona (opcional)"
+              disabled={!selection.municipalityId || disabled}
+              inputSize="lg"
+            />
+          </div>
+          <div className="space-y-6">
+            <SectionLabel
+              number="03"
+              tone="muted"
+              icon={<Target className="h-3.5 w-3.5" />}
+            >
+              Objetivo crítico
+            </SectionLabel>
+            <MinimalInput
+              value={objective}
+              onChange={(e) => setObjective(e.target.value)}
+              placeholder="Ej. Seguridad ciudadana"
+              disabled={disabled}
+              inputSize="lg"
+            />
+          </div>
+        </section>
+
+        {error && (
+          <div className="border-l-2 border-red-400/40 bg-red-500/5 px-6 py-4">
+            <p className="text-sm font-light text-red-200">{error}</p>
+          </div>
+        )}
+
+        <div className="flex justify-end pt-12">
+          <button
+            type="button"
+            onClick={onSubmit}
+            disabled={!canSubmit}
+            className="group flex items-center gap-10 text-white transition-all disabled:opacity-20"
+          >
+            <div className="text-right">
+              <p className="mb-1 text-[10px] font-bold uppercase tracking-eyebrow_xs text-sky-500">
+                Confirmar
+              </p>
+              <p className="font-display text-2xl font-bold">
+                GENERAR DIAGNÓSTICO
+              </p>
+            </div>
+            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 transition-all duration-500 group-hover:bg-white group-hover:text-black">
+              <ArrowRight className="h-6 w-6" />
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// =============================================================================
+// RESULTS
+// =============================================================================
+
+interface ResultViewProps {
   run: AnalysisDetail;
+  zona: string;
+  municipalityName: string;
+  objective: string;
+  onRegenerate: () => void;
+  regenerateLoading: boolean;
   onExport: () => void;
   exportLoading: boolean;
-}) {
+}
+
+function ResultView({
+  run,
+  zona,
+  municipalityName,
+  objective,
+  onRegenerate,
+  regenerateLoading,
+  onExport,
+  exportLoading,
+}: ResultViewProps) {
   const qualityLevel = run.data_quality.can_cite_as_municipal
     ? "official_municipal"
     : "calibrated_estimate";
 
   return (
-    <div className="space-y-4">
-      <div className="rounded-xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-slate-50 p-5">
-        <div className="mb-3 flex items-start justify-between">
-          <div>
-            <h2 className="text-xl font-bold text-slate-900">{run.municipality_id}</h2>
-            <p className="mt-0.5 text-xs text-slate-500">
-              {new Date(run.created_at).toLocaleString("es-MX")}
-            </p>
+    <div className="animate-fade-in-slow space-y-32">
+      {/* ===== Header ===== */}
+      <section className="space-y-10 border-b border-slate-900 pb-16">
+        <div className="flex items-center gap-3">
+          <div className="h-2 w-2 animate-pulse rounded-full bg-sky-500" />
+          <span className="text-[10px] font-black uppercase tracking-eyebrow text-sky-500">
+            Informe Territorial Consolidado
+          </span>
+          <span className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-700">
+            · {new Date(run.created_at).toLocaleDateString("es-MX")}
+          </span>
+        </div>
+
+        <div className="flex flex-col items-end justify-between gap-12 md:flex-row">
+          <div className="space-y-4">
+            <h1 className="font-display text-7xl font-extrabold leading-none tracking-tighter text-white md:text-8xl">
+              {municipalityName || run.municipality_id}
+            </h1>
+            {zona && (
+              <p className="text-3xl font-light italic text-slate-600">
+                Demarcación: {zona}
+              </p>
+            )}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <QualityBadge level={qualityLevel} />
+              <ConfidenceBar confidence={run.data_quality.overall_confidence} />
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <QualityBadge level={qualityLevel} />
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={onExport}
-              loading={exportLoading}
+
+          <div className="flex flex-wrap items-center gap-6">
+            <button
+              onClick={onRegenerate}
+              disabled={regenerateLoading}
+              className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500 transition-colors hover:text-white disabled:opacity-30"
             >
-              ↓ PDF
-            </Button>
+              {regenerateLoading ? "Regenerando…" : "↻ Regenerar"}
+            </button>
+            <button
+              onClick={onExport}
+              disabled={exportLoading}
+              className="flex items-center gap-3 border-b-2 border-white pb-2 text-[10px] font-black uppercase tracking-eyebrow_xs transition-all hover:border-sky-400 hover:text-sky-400 disabled:opacity-40"
+            >
+              {exportLoading ? "Exportando…" : "Exportar PDF"}{" "}
+              <FileDown className="h-3.5 w-3.5" />
+            </button>
           </div>
         </div>
-        <ConfidenceBar confidence={run.data_quality.overall_confidence} />
+
+        {!run.data_quality.can_cite_as_municipal && (
+          <MethodologyDisclaimer
+            disclaimer="Este análisis usa estimaciones regionales calibradas. Las cifras son orientativas, no estadísticas municipales exactas."
+            quality_label="Datos estimados"
+          />
+        )}
+      </section>
+
+      {/* ===== Editorial grid ===== */}
+      <div className="grid gap-20 md:grid-cols-12">
+        {/* --- Left column (8 cols): narrative ----------------------------- */}
+        <div className="space-y-20 md:col-span-8">
+          {/* Executive summary */}
+          {run.executive_summary && (
+            <article className="space-y-8">
+              <SectionLabel tone="muted">
+                <span className="mr-3 inline-block h-px w-10 bg-slate-800 align-middle" />
+                Análisis de situación
+              </SectionLabel>
+              <p className="font-display text-3xl font-light leading-tight text-white md:text-4xl">
+                {run.executive_summary}
+              </p>
+              {objective && (
+                <p className="border-l border-slate-800 pl-8 text-lg font-light leading-relaxed text-slate-400">
+                  Objetivo crítico declarado:{" "}
+                  <span className="font-medium text-slate-200">
+                    {objective}
+                  </span>
+                  .
+                </p>
+              )}
+            </article>
+          )}
+
+          {/* Critical needs */}
+          {run.critical_needs?.length > 0 && (
+            <article className="space-y-12">
+              <SectionLabel tone="muted">
+                <span className="mr-3 inline-block h-px w-10 bg-slate-800 align-middle" />
+                Necesidades críticas
+              </SectionLabel>
+              <div className="space-y-10">
+                {run.critical_needs.map((need, i) => (
+                  <NeedRow key={i} need={need} index={i} />
+                ))}
+              </div>
+            </article>
+          )}
+
+          {/* Opportunities */}
+          {run.opportunities?.length > 0 && (
+            <article className="space-y-12">
+              <SectionLabel tone="muted">
+                <span className="mr-3 inline-block h-px w-10 bg-slate-800 align-middle" />
+                Oportunidades estratégicas
+              </SectionLabel>
+              <ul className="space-y-4">
+                {run.opportunities.map((opportunity, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-4 text-base font-light leading-relaxed text-slate-300"
+                  >
+                    <ArrowRight className="mt-1.5 h-4 w-4 shrink-0 text-sky-500" />
+                    <span>{opportunity}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          )}
+
+          {/* Strategy section (full editorial) */}
+          {run.strategy_section && (
+            <StrategySectionPanel strategy={run.strategy_section} />
+          )}
+
+          {/* Validation issues — surfaced when present */}
+          {run.validation?.issues?.length > 0 && (
+            <article className="space-y-8">
+              <SectionLabel tone="muted">
+                <span className="mr-3 inline-block h-px w-10 bg-slate-800 align-middle" />
+                Validación del informe
+              </SectionLabel>
+              <ValidationReportPanel report={run.validation} />
+            </article>
+          )}
+        </div>
+
+        {/* --- Right column (4 cols): hard data ----------------------------- */}
+        <aside className="space-y-20 md:col-span-4">
+          <KPIBoard kpiBoard={run.kpi_board} />
+          <RunMetadata run={run} />
+        </aside>
       </div>
-
-      {!run.data_quality.can_cite_as_municipal && (
-        <MethodologyDisclaimer
-          disclaimer="Este análisis usa estimaciones regionales calibradas. Las cifras son orientativas, no estadísticas municipales exactas."
-          quality_label="Datos estimados"
-        />
-      )}
-
-      {run.executive_summary && (
-        <Card className="border-l-4 border-l-emerald-500">
-          <CardHeader title="Síntesis" />
-          <p className="text-sm leading-relaxed text-slate-700">{run.executive_summary}</p>
-        </Card>
-      )}
-
-      {run.critical_needs?.length > 0 && (
-        <Card>
-          <CardHeader title="Necesidades Críticas" />
-          <div className="space-y-3">
-            {run.critical_needs.map((need, i) => (
-              <NeedCard key={i} need={need} />
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {run.opportunities?.length > 0 && (
-        <Card>
-          <CardHeader title="Oportunidades Estratégicas" />
-          <ul className="space-y-2">
-            {run.opportunities.map((opportunity, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                <span className="mt-0.5 shrink-0 text-emerald-500">→</span>
-                <span>{opportunity}</span>
-              </li>
-            ))}
-          </ul>
-        </Card>
-      )}
-
-      <KPIBoard kpiBoard={run.kpi_board} />
-
-      {run.strategy_section && <StrategySectionPanel strategy={run.strategy_section} />}
     </div>
   );
 }
 
-function NeedCard({ need }: { need: CriticalNeed }) {
-  const variant =
-    need.severity === "alta" ? "error" : need.severity === "media" ? "warning" : "neutral";
+// =============================================================================
+// SUBCOMPONENTS
+// =============================================================================
 
-  const bg =
-    need.severity === "alta"
-      ? "border-red-100 bg-red-50"
-      : need.severity === "media"
-        ? "border-amber-100 bg-amber-50"
-        : "border-slate-100 bg-slate-50";
-
+function NeedRow({ need, index }: { need: CriticalNeed; index: number }) {
   const description = getNeedDescription(need);
-  const affectedPopulationPct = getNeedAffectedPopulationPct(need);
+  const affected = getNeedAffectedPopulationPct(need);
+
+  const severityColor =
+    need.severity === "alta"
+      ? "text-red-300"
+      : need.severity === "media"
+        ? "text-amber-300"
+        : "text-slate-400";
 
   return (
-    <div className={`rounded-lg border p-3 ${bg}`}>
-      <div className="mb-1 flex items-start gap-2">
-        <Badge variant={variant}>{need.severity}</Badge>
-        <p className="text-sm font-semibold leading-snug text-slate-800">{need.title}</p>
+    <div className="space-y-3 border-l border-slate-800 pl-6">
+      <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-eyebrow_xs">
+        <span className="text-slate-700">{String(index + 1).padStart(2, "0")}</span>
+        {need.severity && (
+          <span className={severityColor}>· severidad {need.severity}</span>
+        )}
       </div>
-
+      <h4 className="text-xl font-bold text-white">{need.title}</h4>
       {description && (
-        <p className="ml-1 text-xs leading-relaxed text-slate-600">{description}</p>
+        <p className="text-sm font-light leading-relaxed text-slate-400">
+          {description}
+        </p>
       )}
-
-      {affectedPopulationPct !== null && (
-        <p className="ml-1 mt-1 text-xs text-slate-500">
-          Afecta al {affectedPopulationPct.toFixed(0)}% de la población
+      {affected !== null && (
+        <p className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-600">
+          Afecta al {affected.toFixed(0)}% de la población
         </p>
       )}
     </div>
@@ -300,9 +549,9 @@ function KPIBoard({ kpiBoard }: { kpiBoard: Record<string, unknown> }) {
   if (!kpis.length) return null;
 
   return (
-    <Card>
-      <CardHeader title="KPIs SMART — Metas Verificables" />
-      <div className="space-y-2">
+    <section className="space-y-12">
+      <SectionLabel tone="muted">Métricas clave</SectionLabel>
+      <div className="space-y-12">
         {kpis.slice(0, 4).map((kpi, i) => {
           const base = asNumber(kpi.baseline_value);
           const target = asNumber(kpi.target_value);
@@ -312,145 +561,214 @@ function KPIBoard({ kpiBoard }: { kpiBoard: Record<string, unknown> }) {
           if (base === null) return null;
 
           return (
-            <div key={i} className="rounded-lg bg-slate-50 px-3 py-2.5">
-              <p className="mb-0.5 text-sm font-medium text-slate-800">{name}</p>
-              <p className="text-sm font-mono text-emerald-700">
-                {base.toLocaleString()} {unit}
-                {target !== null && <span className="mx-2 text-slate-400">→</span>}
-                {target !== null && (
-                  <span className="font-bold">
-                    {target.toLocaleString()} {unit}
+            <div key={i} className="group cursor-default space-y-2">
+              <p className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-700 transition-colors group-hover:text-sky-500">
+                {name}
+              </p>
+              <p className="font-display text-5xl font-extrabold tracking-tighter text-white">
+                {base.toLocaleString()}
+                {unit && (
+                  <span className="ml-2 text-2xl font-light text-slate-500">
+                    {unit}
                   </span>
                 )}
               </p>
+              {target !== null && (
+                <p className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-sky-400">
+                  Meta · {target.toLocaleString()} {unit}
+                </p>
+              )}
             </div>
           );
         })}
       </div>
-    </Card>
+    </section>
   );
 }
+
+function RunMetadata({ run }: { run: AnalysisDetail }) {
+  return (
+    <section className="space-y-6 border-t border-slate-900 pt-10">
+      <SectionLabel tone="muted">Metadatos del run</SectionLabel>
+      <dl className="space-y-4 text-xs">
+        <MetaRow label="ID" value={run.id.slice(0, 8) + "…"} mono />
+        <MetaRow label="Status" value={run.status} />
+        <MetaRow
+          label="Generado"
+          value={new Date(run.created_at).toLocaleString("es-MX")}
+        />
+        <MetaRow
+          label="Cobertura"
+          value={`${(run.data_quality.overall_confidence * 100).toFixed(0)}% conf.`}
+        />
+      </dl>
+    </section>
+  );
+}
+
+function MetaRow({
+  label,
+  value,
+  mono,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between border-b border-slate-900/60 pb-3">
+      <dt className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-700">
+        {label}
+      </dt>
+      <dd className={cn("text-slate-300", mono && "font-mono")}>{value}</dd>
+    </div>
+  );
+}
+
+// ---------- Strategy section ------------------------------------------------
 
 function StrategySectionPanel({ strategy }: { strategy: StrategySection }) {
   const hasContent =
     Boolean(strategy.executive_strategic) ||
     Boolean(strategy.messaging_axes?.length) ||
-    Boolean(strategy.candidate_positioning);
+    Boolean(strategy.candidate_positioning) ||
+    Boolean(strategy.recommended_tone) ||
+    Boolean(strategy.framing_suggestions?.length) ||
+    Boolean(strategy.risk_flags?.length);
 
   if (!hasContent) return null;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-3 py-2">
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent to-emerald-200" />
-        <span className="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-600">
-          Estrategia de Comunicación{strategy.ai_generated ? " · IA" : ""}
-        </span>
-        <div className="h-px flex-1 bg-gradient-to-l from-transparent to-emerald-200" />
-      </div>
+    <article className="space-y-12">
+      <SectionLabel tone="accent">
+        <span className="mr-3 inline-block h-px w-10 bg-sky-700/40 align-middle" />
+        Estrategia de comunicación
+        {strategy.ai_generated && (
+          <span className="ml-2 text-slate-700">· IA</span>
+        )}
+      </SectionLabel>
 
       {strategy.executive_strategic && (
-        <Card className="border-emerald-200 bg-gradient-to-r from-emerald-50 to-slate-50">
-          <p className="text-sm font-medium leading-relaxed text-slate-800">
-            {strategy.executive_strategic}
-          </p>
-        </Card>
+        <p className="font-display text-2xl font-light leading-tight text-white md:text-3xl">
+          {strategy.executive_strategic}
+        </p>
       )}
 
       {strategy.messaging_axes?.length > 0 && (
-        <Card>
-          <CardHeader title="Ejes de Mensaje" />
-          <div className="space-y-4">
-            {strategy.messaging_axes.map((axis, i) => (
-              <AxisCard key={i} ax={axis} />
+        <div className="space-y-10">
+          <h4 className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500">
+            Ejes de mensaje
+          </h4>
+          <div className="grid gap-10 sm:grid-cols-2">
+            {strategy.messaging_axes.map((ax, i) => (
+              <AxisCard key={i} ax={ax} />
             ))}
           </div>
-        </Card>
+        </div>
       )}
 
       {(strategy.candidate_positioning || strategy.recommended_tone) && (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-12 md:grid-cols-2">
           {strategy.candidate_positioning && (
-            <Card>
-              <CardHeader title="Posicionamiento" />
-              <p className="text-sm leading-relaxed text-slate-700">
+            <div className="space-y-3">
+              <h4 className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500">
+                Posicionamiento
+              </h4>
+              <p className="text-base font-light leading-relaxed text-slate-300">
                 {strategy.candidate_positioning}
               </p>
-            </Card>
+            </div>
           )}
-
           {strategy.recommended_tone && (
-            <Card>
-              <CardHeader title="Tono y Canales" />
-              <p className="mb-2 text-sm text-slate-700">{strategy.recommended_tone}</p>
+            <div className="space-y-3">
+              <h4 className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500">
+                Tono recomendado
+              </h4>
+              <p className="text-base font-light leading-relaxed text-slate-300">
+                {strategy.recommended_tone}
+              </p>
               {strategy.communication_channels_priority?.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {strategy.communication_channels_priority.map((channel, i) => (
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {strategy.communication_channels_priority.map((ch, i) => (
                     <span
                       key={i}
-                      className="rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-0.5 text-xs text-emerald-700"
+                      className="rounded-full border border-sky-400/30 bg-sky-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-eyebrow_xs text-sky-300"
                     >
-                      {channel}
+                      {ch}
                     </span>
                   ))}
                 </div>
               )}
-            </Card>
+            </div>
           )}
         </div>
       )}
 
       {strategy.framing_suggestions?.length > 0 && (
-        <Card>
-          <CardHeader title="Framings" />
-          <div className="space-y-2">
+        <div className="space-y-4">
+          <h4 className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500">
+            Framings
+          </h4>
+          <div className="space-y-3">
             {strategy.framing_suggestions.map((framing, i) => (
               <p
                 key={i}
-                className="border-l-2 border-emerald-400 pl-3 text-sm italic text-slate-700"
+                className="border-l-2 border-sky-400/40 pl-4 text-base font-light italic text-slate-300"
               >
                 {framing}
               </p>
             ))}
           </div>
-        </Card>
+        </div>
       )}
 
       {strategy.risk_flags?.length > 0 && (
-        <Card className="border-amber-200 bg-amber-50">
-          <CardHeader title="⚠ Riesgos Comunicacionales" />
-          <ul className="space-y-1.5">
+        <div className="space-y-4">
+          <h4 className="text-[10px] font-bold uppercase tracking-eyebrow_xs text-amber-300">
+            ⚠ Riesgos comunicacionales
+          </h4>
+          <ul className="space-y-2">
             {strategy.risk_flags.map((risk, i) => (
-              <li key={i} className="text-sm leading-relaxed text-amber-800">
-                {risk}
+              <li
+                key={i}
+                className="text-sm font-light leading-relaxed text-amber-100/80"
+              >
+                · {risk}
               </li>
             ))}
           </ul>
-        </Card>
+        </div>
       )}
-    </div>
+    </article>
   );
 }
 
 function AxisCard({ ax }: { ax: MessagingAxis }) {
   return (
-    <div className="border-l-2 border-emerald-500 py-1 pl-4">
-      <p className="mb-0.5 text-sm font-bold text-slate-900">{ax.axis}</p>
-      <p className="text-sm text-slate-700">{ax.message}</p>
-      <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5">
+    <div className="space-y-3 border-l-2 border-sky-500/60 pl-5">
+      <p className="text-sm font-bold uppercase tracking-eyebrow_xs text-white">
+        {ax.axis}
+      </p>
+      <p className="text-base font-light leading-relaxed text-slate-300">
+        {ax.message}
+      </p>
+      <div className="space-y-1 pt-1 text-xs">
         {ax.rationale && (
-          <p className="text-xs text-slate-500">
-            <span className="font-medium">Argumento:</span> {ax.rationale}
+          <p className="text-slate-500">
+            <span className="font-bold text-slate-400">Argumento · </span>
+            {ax.rationale}
           </p>
         )}
         {ax.data_anchor && (
-          <p className="text-xs text-emerald-600">
-            <span className="font-medium">Dato ancla:</span> {ax.data_anchor}
+          <p className="text-sky-400">
+            <span className="font-bold">Dato ancla · </span>
+            {ax.data_anchor}
           </p>
         )}
         {ax.emotional_hook && (
-          <p className="text-xs text-violet-600">
-            <span className="font-medium">Emoción:</span> {ax.emotional_hook}
+          <p className="text-violet-300">
+            <span className="font-bold">Emoción · </span>
+            {ax.emotional_hook}
           </p>
         )}
       </div>

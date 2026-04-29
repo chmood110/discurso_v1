@@ -1,5 +1,18 @@
 "use client";
-interface Option { value: string; label: string; }
+
+import { MinimalSelect } from "./minimal-select";
+
+/**
+ * Legacy <Select /> shim — preserves the original {value, onChange, options,
+ * label, placeholder, disabled} contract used by older pages, but renders
+ * the new minimal selector underneath.
+ */
+
+interface Option {
+  value: string;
+  label: string;
+}
+
 interface Props {
   label?: string;
   value: string;
@@ -9,19 +22,30 @@ interface Props {
   disabled?: boolean;
   className?: string;
 }
-export function Select({ label, value, onChange, options, placeholder, disabled, className = "" }: Props) {
+
+export function Select({
+  label,
+  value,
+  onChange,
+  options,
+  placeholder,
+  disabled,
+  className,
+}: Props) {
   return (
     <div className={className}>
-      {label && <label className="block text-xs font-medium text-slate-600 mb-1">{label}</label>}
-      <select
+      {label && (
+        <label className="mb-2 block text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500">
+          {label}
+        </label>
+      )}
+      <MinimalSelect
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
+        options={options}
+        placeholder={placeholder}
         disabled={disabled}
-        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:opacity-50"
-      >
-        {placeholder && <option value="">{placeholder}</option>}
-        {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-      </select>
+      />
     </div>
   );
 }

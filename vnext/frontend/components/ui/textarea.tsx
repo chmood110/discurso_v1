@@ -1,17 +1,38 @@
 "use client";
+
+import { cn } from "@/lib/cn";
+
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   error?: string;
 }
-export function Textarea({ label, error, className = "", ...props }: Props) {
+
+/**
+ * Legacy <Textarea />. Prefer <MinimalTextarea /> in new pages.
+ */
+export function Textarea({ label, error, className, ...props }: Props) {
   return (
     <div className={className}>
-      {label && <label className="block text-xs font-medium text-slate-600 mb-1">{label}</label>}
+      {label && (
+        <label className="mb-2 block text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500">
+          {label}
+        </label>
+      )}
       <textarea
-        className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none ${error ? "border-red-400" : "border-slate-300"}`}
         {...props}
+        className={cn(
+          "no-scrollbar w-full resize-none border-b bg-slate-950/30 px-3 py-3 text-sm text-white transition-colors",
+          "placeholder:text-slate-800 focus:outline-none",
+          error
+            ? "border-red-400/60 focus:border-red-400"
+            : "border-slate-800 focus:border-sky-500"
+        )}
       />
-      {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
+      {error && (
+        <p className="mt-2 text-[10px] font-bold uppercase tracking-eyebrow_xs text-red-300">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

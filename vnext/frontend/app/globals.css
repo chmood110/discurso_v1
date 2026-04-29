@@ -1,3 +1,159 @@
+/* ============================================================================
+ * VoxPolítica · Tlaxcala — global stylesheet
+ *
+ * All shared design primitives live here:
+ *   · Font imports (Outfit + Plus Jakarta Sans)
+ *   · CSS variables consumed by Tailwind (font-display / font-body)
+ *   · Keyframes for the orbital loader and aurora background
+ *     (also exposed through tailwind.config.js animations)
+ *   · Range slider, scrollbar utilities, paper-layout helpers
+ * ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ---- 1. CSS variables ---------------------------------------------------- */
+
+:root {
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+/* ---- 2. Base ------------------------------------------------------------- */
+
+html,
+body {
+  background-color: #020617;
+  color: #e2e8f0;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  ::selection {
+    background: rgba(56, 189, 248, 0.3);
+  }
+}
+
+/* ---- 3. Range slider (used in Speech) ----------------------------------- */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #38bdf8;
+  -webkit-appearance: none;
+  margin-top: -7px;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+input[type="range"]:active::-webkit-slider-thumb,
+.slider-thumb-active::-webkit-slider-thumb {
+  transform: scale(1.5);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.8) !important;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 2px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #38bdf8;
+  border: 0;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+/* ---- 4. Scrollbar utilities --------------------------------------------- */
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.3);
+    border-radius: 2px;
+  }
+}
+
+/* ---- 5. Paper layout (Speech results) ----------------------------------- */
+
+.speech-paper {
+  background: #ffffff;
+  color: #1e293b;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+.speech-paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: #38bdf8;
+}
+
+/* ---- 6. Inline keyframes (also re-exposed in tailwind.config.js) -------- */
+
+@keyframes auroraPan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes pulseCore {
+  from {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

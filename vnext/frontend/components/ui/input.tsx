@@ -1,17 +1,40 @@
 "use client";
+
+/**
+ * Legacy <Input /> — kept so any older code still compiles.
+ * For new pages prefer <MinimalInput />.
+ */
+
+import { cn } from "@/lib/cn";
+
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
 }
-export function Input({ label, error, className = "", ...props }: Props) {
+
+export function Input({ label, error, className, ...props }: Props) {
   return (
     <div className={className}>
-      {label && <label className="block text-xs font-medium text-slate-600 mb-1">{label}</label>}
+      {label && (
+        <label className="mb-2 block text-[10px] font-bold uppercase tracking-eyebrow_xs text-slate-500">
+          {label}
+        </label>
+      )}
       <input
-        className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 ${error ? "border-red-400" : "border-slate-300"}`}
         {...props}
+        className={cn(
+          "w-full border-b bg-transparent py-3 text-base text-white transition-colors",
+          "placeholder:text-slate-800 focus:outline-none",
+          error
+            ? "border-red-400/60 focus:border-red-400"
+            : "border-slate-800 focus:border-sky-500"
+        )}
       />
-      {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
+      {error && (
+        <p className="mt-2 text-[10px] font-bold uppercase tracking-eyebrow_xs text-red-300">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
