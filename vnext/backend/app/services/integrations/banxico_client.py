@@ -1,92 +1,141 @@
-"""
-Cliente Banxico SIE (Sistema de Información Económica).
+from __future__ import annotations
 
-API REST: https://www.banxico.org.mx/SieAPIRest/service/v1/
-Requiere BMX-TOKEN en variables de entorno.
-
-Series relevantes:
-  SF43718 — Tipo de cambio (FIX) USD/MXN
-  SF61745 — Tasa de Fondeo Bancario (tasa objetivo Banxico)
-  SF43773 — Tasa de interés de fondeo interbancario
-  SG20 — INPC general (inflación)
-  SE27820 — Remesas familiares totales (millones USD)
-  SE57408 — Remesas por entidad federativa: Tlaxcala
-"""
-
-import logging
-from typing import Optional
+import os
+from typing import Any
 
 import httpx
-
-from app.core.config import settings
-
-logger = logging.getLogger(__name__)
-
-_BANXICO_BASE = "https://www.banxico.org.mx/SieAPIRest/service/v1"
-_TIMEOUT = 12.0
 
 
 class BanxicoClient:
     """
-    Cliente para Banxico SIE REST.
-    Requiere BANXICO_TOKEN en variables de entorno.
-    Tolerante a fallos.
+    Cliente para consultar series del Sistema de Información Económica de Banxico.
     """
 
-    def __init__(self):
-        self._token = getattr(settings, "BANXICO_TOKEN", "")
-        self._timeout = httpx.Timeout(_TIMEOUT)
+    BASE_URL = "https://www.banxico.org.mx/SieAPIRest/service/v1/series"
 
-    def _is_configured(self) -> bool:
-        return bool(self._token)
+    def __init__(self, token: str | None = None, timeout: float = 20.0) -> None:
+        self._token = token or os.getenv("BANXICO_TOKEN", "")
+        self.timeout = timeout
 
-    def _headers(self) -> dict:
-        return {"Bmx-Token": self._token}
+        if not self._token:
+            raise ValueError("BANXICO_TOKEN no está configurado")
 
-    async def _fetch_series_latest(self, series_id: str) -> Optional[float]:
-        """Obtiene el dato más reciente de una serie del SIE."""
-        if not self._is_configured():
-            logger.debug("BANXICO_TOKEN no configurado; usando datos de referencia.")
-            return None
-        url = f"{_BANXICO_BASE}/series/{series_id}/datos/oportuno"
+    @property
+    def token(self) -> str:
+        return self._token
+
+    async def get_latest_observation(self, serie_id: str) -> dict[str, Any]:
+        """
+        Obtiene el dato oportuno o más reciente de una serie Banxico.
+        """
+        url = f"{self.BASE_URL}/{serie_id}/datos/oportuno"
+
+        headers = {
+            "Bmx-Token": self._token,
+        }
+
+        async with httpx.AsyncClient(timeout=self.timeout) as client:
+            try:
+                response = await client.get(url, headers=headers)
+                response.raise_for_status()
+                return response.json()
+            except httpx.HTTPStatusError as exc:
+                raise RuntimeError(
+                    f"Banxico respondió con error HTTP {exc.response.status_code}: "
+                    f"{exc.response.text[:500]}"
+                ) from exc
+            except httpx.RequestError as exc:
+                raise RuntimeError(
+                    f"No se pudo conectar con Banxico: {exc}"
+                ) from exc
+
+    async def get_series_range(
+        self,
+        serie_id: str,
+        *,
+        start_date: str,
+        end_date: str,
+    ) -> dict[str, Any]:
+        """
+        Obtiene datos de una serie Banxico en un rango de fechas.
+
+        Formato esperado:
+            YYYY-MM-DD
+        """
+        url = f"{self.BASE_URL}/{serie_id}/datos/{start_date}/{end_date}"
+
+        headers = {
+            "Bmx-Token": self._token,
+        }
+
+        async with httpx.AsyncClient(timeout=self.timeout) as client:
+            try:
+                response = await client.get(url, headers=headers)
+                response.raise_for_status()
+                return response.json()
+            except httpx.HTTPStatusError as exc:
+                raise RuntimeError(
+                    f"Banxico respondió con error HTTP {exc.response.status_code}: "
+                    f"{exc.response.text[:500]}"
+                ) from exc
+            except httpx.RequestError as exc:
+                raise RuntimeError(
+                    f"No se pudo conectar con Banxico: {exc}"
+                ) from exc
+
+    def normalize_latest_observation(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """
+        Normaliza la respuesta de Banxico para obtener un dato limpio.
+
+        Entrada esperada:
+            {
+                "bmx": {
+                    "series": [
+                        {
+                            "idSerie": "...",
+                            "titulo": "...",
+                            "datos": [
+                                {"fecha": "...", "dato": "..."}
+                            ]
+                        }
+                    ]
+                }
+            }
+
+        Salida:
+            {
+                "series_id": "...",
+                "title": "...",
+                "value": 6.77,
+                "date": "29/04/2026",
+                "source": "Banxico SIE"
+            }
+        """
         try:
-            async with httpx.AsyncClient(timeout=self._timeout) as client:
-                resp = await client.get(url, headers=self._headers())
-                if resp.status_code == 200:
-                    data = resp.json()
-                    series_list = data.get("bmx", {}).get("series", [])
-                    if series_list:
-                        datos = series_list[0].get("datos", [])
-                        if datos:
-                            val_str = datos[-1].get("dato", "").replace(",", "")
-                            return float(val_str)
+            series = payload.get("bmx", {}).get("series", [])
+            if not series:
+                raise ValueError("La respuesta no contiene series")
+
+            serie = series[0]
+            datos = serie.get("datos", [])
+            if not datos:
+                raise ValueError("La serie no contiene datos")
+
+            latest = datos[0]
+            raw_value = str(latest.get("dato", "")).replace(",", "").strip()
+
+            if not raw_value:
+                raise ValueError("El dato viene vacío")
+
+            return {
+                "series_id": serie.get("idSerie"),
+                "title": serie.get("titulo"),
+                "value": float(raw_value),
+                "date": latest.get("fecha"),
+                "source": "Banxico SIE",
+            }
+
         except Exception as exc:
-            logger.warning("Banxico SIE error para serie %s: %s", series_id, exc)
-        return None
-
-    async def fetch_exchange_rate(self) -> Optional[float]:
-        """Tipo de cambio FIX USD/MXN (SF43718)."""
-        return await self._fetch_series_latest("SF43718")
-
-    async def fetch_reference_rate(self) -> Optional[float]:
-        """Tasa objetivo Banxico (SF61745)."""
-        return await self._fetch_series_latest("SF61745")
-
-    async def fetch_inflation(self) -> Optional[float]:
-        """INPC variación anual (SF46405)."""
-        return await self._fetch_series_latest("SF46405")
-
-    async def fetch_remittances_national(self) -> Optional[float]:
-        """Remesas familiares totales en millones de USD (SE27820)."""
-        return await self._fetch_series_latest("SE27820")
-
-    async def fetch_remittances_tlaxcala(self) -> Optional[float]:
-        """
-        Remesas por entidad federativa — Tlaxcala.
-        Banxico publica esta serie desde 2017 desagregada por estado.
-        El valor está en millones de pesos.
-        """
-        return await self._fetch_series_latest("SE57408")
-
-
-banxico_client = BanxicoClient()
+            raise ValueError(
+                f"No se pudo normalizar la respuesta de Banxico: {exc}"
+            ) from exc

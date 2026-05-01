@@ -20,10 +20,10 @@ async def export_analysis_pdf(run_id: str, db: AsyncSession = Depends(get_db)) -
             headers={"Content-Disposition": f'attachment; filename="analisis-{run_id[:8]}.pdf"'},
         )
     except ValueError as exc:
-        raise HTTPException(404, detail=str(exc))
+        raise HTTPException(status_code=404, detail=str(exc))
     except Exception as exc:
         logger.exception("PDF export failed for analysis %s", run_id)
-        raise HTTPException(500, detail=str(exc))
+        raise HTTPException(status_code=500, detail="Error interno al generar el PDF de análisis.")
 
 
 @router.get("/pdf/speech/{run_id}", summary="Download speech PDF.", response_class=Response)
@@ -35,6 +35,7 @@ async def export_speech_pdf(run_id: str, db: AsyncSession = Depends(get_db)) -> 
             headers={"Content-Disposition": f'attachment; filename="discurso-{run_id[:8]}.pdf"'},
         )
     except ValueError as exc:
-        raise HTTPException(404, detail=str(exc))
+        raise HTTPException(status_code=404, detail=str(exc))
     except Exception as exc:
-        raise HTTPException(500, detail=str(exc))
+        logger.exception("PDF export failed for speech %s", run_id)
+        raise HTTPException(status_code=500, detail="Error interno al generar el PDF de discurso.")

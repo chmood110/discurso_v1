@@ -1,0 +1,64 @@
+{
+  "banxico": {
+    "reference_rate": {
+      "serie_id": "SF43773",
+      "target_field": "economic_data.banxico_reference_rate",
+      "scope": "national",
+      "source": "Banxico SIE",
+      "enabled": true,
+      "use_in_pdf": false,
+      "notes": "Serie técnica para validar integración. No debe usarse como indicador territorial principal."
+    },
+    "remittances_tlaxcala": {
+      "serie_id": "PENDIENTE",
+      "target_field": "economic_data.remittances_state_mdp",
+      "scope": "state",
+      "source": "Banxico SIE",
+      "enabled": false,
+      "use_in_pdf": true,
+      "notes": "Pendiente sustituir por serie oficial de remesas para Tlaxcala."
+    }
+  },
+  "inegi": {
+    "population": {
+      "indicator_id": "PENDIENTE",
+      "target_field": "social_data.population",
+      "scope": "municipal",
+      "source": "INEGI API",
+      "enabled": false,
+      "use_in_pdf": true
+    },
+    "internet_households_pct": {
+      "indicator_id": "PENDIENTE",
+      "target_field": "infrastructure_data.internet_households_pct",
+      "scope": "municipal",
+      "source": "INEGI API",
+      "enabled": false,
+      "use_in_pdf": true
+    },
+    "water_households_pct": {
+      "indicator_id": "PENDIENTE",
+      "target_field": "infrastructure_data.water_households_pct",
+      "scope": "municipal",
+      "source": "INEGI API",
+      "enabled": false,
+      "use_in_pdf": true
+    },
+    "drainage_households_pct": {
+      "indicator_id": "PENDIENTE",
+      "target_field": "infrastructure_data.drainage_households_pct",
+      "scope": "municipal",
+      "source": "INEGI API",
+      "enabled": false,
+      "use_in_pdf": true
+    },
+    "electricity_households_pct": {
+      "indicator_id": "PENDIENTE",
+      "target_field": "infrastructure_data.electricity_households_pct",
+      "scope": "municipal",
+      "source": "INEGI API",
+      "enabled": false,
+      "use_in_pdf": true
+    }
+  }
+}

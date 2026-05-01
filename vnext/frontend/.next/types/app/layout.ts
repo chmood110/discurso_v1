@@ -1,4 +1,4 @@
-// File: /home/eclipse/Escritorio/PORTAFOLIO/voxpolitica_1.0.0_final/vnext/frontend_2/app/layout.tsx
+// File: /home/eclipse/Escritorio/PORTAFOLIO/voxpolitica_1.0.0_final/vnext/frontend/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

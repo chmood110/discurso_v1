@@ -1,0 +1,155 @@
+{
+  "summary": {
+    "total_candidate_topics": 11,
+    "live_tests": 1,
+    "recommended_next_step": "Seleccionar primero indicadores municipales de INEGI y series estatales de Banxico realmente útiles para el análisis territorial."
+  },
+  "candidate_topics": [
+    {
+      "api": "inegi_indicators",
+      "api_description": "Indicadores estadísticos de INEGI consultables por clave de indicador y área geográfica.",
+      "api_status": "requires_indicator_ids",
+      "priority": "high",
+      "topic": "Población total",
+      "target_section": "tarjetas_superiores",
+      "target_field": "social_data.population",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Dato base para contextualizar el municipio."
+    },
+    {
+      "api": "inegi_indicators",
+      "api_description": "Indicadores estadísticos de INEGI consultables por clave de indicador y área geográfica.",
+      "api_status": "requires_indicator_ids",
+      "priority": "high",
+      "topic": "Internet en hogares",
+      "target_section": "servicios_basicos",
+      "target_field": "infrastructure_data.internet_households_pct",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Útil para conectividad, educación, empleo y trámites digitales."
+    },
+    {
+      "api": "inegi_indicators",
+      "api_description": "Indicadores estadísticos de INEGI consultables por clave de indicador y área geográfica.",
+      "api_status": "requires_indicator_ids",
+      "priority": "high",
+      "topic": "Agua potable",
+      "target_section": "servicios_basicos",
+      "target_field": "infrastructure_data.water_households_pct",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Indicador directo de infraestructura básica."
+    },
+    {
+      "api": "inegi_indicators",
+      "api_description": "Indicadores estadísticos de INEGI consultables por clave de indicador y área geográfica.",
+      "api_status": "requires_indicator_ids",
+      "priority": "high",
+      "topic": "Drenaje",
+      "target_section": "servicios_basicos",
+      "target_field": "infrastructure_data.drainage_households_pct",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Indicador directo de infraestructura básica."
+    },
+    {
+      "api": "inegi_indicators",
+      "api_description": "Indicadores estadísticos de INEGI consultables por clave de indicador y área geográfica.",
+      "api_status": "requires_indicator_ids",
+      "priority": "high",
+      "topic": "Electricidad",
+      "target_section": "servicios_basicos",
+      "target_field": "infrastructure_data.electricity_households_pct",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Indicador directo de infraestructura básica."
+    },
+    {
+      "api": "inegi_denue",
+      "api_description": "Directorio Estadístico Nacional de Unidades Económicas.",
+      "api_status": "available_with_token",
+      "priority": "high",
+      "topic": "Unidades económicas por municipio",
+      "target_section": "actividad_economica",
+      "target_field": "economic_data.business_units_total",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Permite medir tejido productivo local."
+    },
+    {
+      "api": "inegi_denue",
+      "api_description": "Directorio Estadístico Nacional de Unidades Económicas.",
+      "api_status": "available_with_token",
+      "priority": "high",
+      "topic": "Unidades económicas por sector",
+      "target_section": "actividad_economica",
+      "target_field": "economic_data.sector_distribution",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Permite construir un motor económico más real que un ranking sintético."
+    },
+    {
+      "api": "inegi_denue",
+      "api_description": "Directorio Estadístico Nacional de Unidades Económicas.",
+      "api_status": "available_with_token",
+      "priority": "high",
+      "topic": "Establecimientos de salud",
+      "target_section": "servicios_salud",
+      "target_field": "infrastructure_data.health_facilities_count",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Útil para enriquecer acceso a salud."
+    },
+    {
+      "api": "inegi_denue",
+      "api_description": "Directorio Estadístico Nacional de Unidades Económicas.",
+      "api_status": "available_with_token",
+      "priority": "high",
+      "topic": "Escuelas",
+      "target_section": "educacion",
+      "target_field": "infrastructure_data.schools_count",
+      "geographic_level": "municipal",
+      "use_in_pdf": true,
+      "notes": "Útil para complementar rezago educativo."
+    },
+    {
+      "api": "banxico_sie",
+      "api_description": "Series económicas del Sistema de Información Económica de Banxico.",
+      "api_status": "available_with_token",
+      "priority": "medium",
+      "topic": "Remesas por entidad federativa",
+      "target_section": "oportunidades",
+      "target_field": "economic_data.remittances_state_mdp",
+      "geographic_level": "state",
+      "use_in_pdf": true,
+      "notes": "Útil para contexto económico estatal; debe evitar presentarse como dato municipal."
+    },
+    {
+      "api": "banxico_sie",
+      "api_description": "Series económicas del Sistema de Información Económica de Banxico.",
+      "api_status": "available_with_token",
+      "priority": "medium",
+      "topic": "Tasa de referencia",
+      "target_section": "contexto_macro",
+      "target_field": "economic_data.banxico_reference_rate",
+      "geographic_level": "national",
+      "use_in_pdf": false,
+      "notes": "Útil como validación técnica o contexto macro, no como dato territorial principal."
+    }
+  ],
+  "live_tests": [
+    {
+      "api": "banxico_sie",
+      "topic": "Tasa de fondeo bancario",
+      "series_id": "SF43773",
+      "title": "Tasa de fondeo bancario Mediana ponderada por volumen Tasa de interés en por ciento anual",
+      "value": 6.77,
+      "date": "29/04/2026",
+      "source": "Banxico SIE",
+      "geographic_level": "national",
+      "use_in_pdf": false,
+      "notes": "Prueba técnica de conectividad; no usar como indicador territorial principal."
+    }
+  ]
+}

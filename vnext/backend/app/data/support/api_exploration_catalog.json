@@ -1,0 +1,111 @@
+{
+  "inegi_indicators": {
+    "description": "Indicadores estadísticos de INEGI consultables por clave de indicador y área geográfica.",
+    "status": "requires_indicator_ids",
+    "priority": "high",
+    "candidate_topics": [
+      {
+        "name": "Población total",
+        "target_section": "tarjetas_superiores",
+        "target_field": "social_data.population",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Dato base para contextualizar el municipio."
+      },
+      {
+        "name": "Internet en hogares",
+        "target_section": "servicios_basicos",
+        "target_field": "infrastructure_data.internet_households_pct",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Útil para conectividad, educación, empleo y trámites digitales."
+      },
+      {
+        "name": "Agua potable",
+        "target_section": "servicios_basicos",
+        "target_field": "infrastructure_data.water_households_pct",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Indicador directo de infraestructura básica."
+      },
+      {
+        "name": "Drenaje",
+        "target_section": "servicios_basicos",
+        "target_field": "infrastructure_data.drainage_households_pct",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Indicador directo de infraestructura básica."
+      },
+      {
+        "name": "Electricidad",
+        "target_section": "servicios_basicos",
+        "target_field": "infrastructure_data.electricity_households_pct",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Indicador directo de infraestructura básica."
+      }
+    ]
+  },
+  "inegi_denue": {
+    "description": "Directorio Estadístico Nacional de Unidades Económicas.",
+    "status": "available_with_token",
+    "priority": "high",
+    "candidate_topics": [
+      {
+        "name": "Unidades económicas por municipio",
+        "target_section": "actividad_economica",
+        "target_field": "economic_data.business_units_total",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Permite medir tejido productivo local."
+      },
+      {
+        "name": "Unidades económicas por sector",
+        "target_section": "actividad_economica",
+        "target_field": "economic_data.sector_distribution",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Permite construir un motor económico más real que un ranking sintético."
+      },
+      {
+        "name": "Establecimientos de salud",
+        "target_section": "servicios_salud",
+        "target_field": "infrastructure_data.health_facilities_count",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Útil para enriquecer acceso a salud."
+      },
+      {
+        "name": "Escuelas",
+        "target_section": "educacion",
+        "target_field": "infrastructure_data.schools_count",
+        "geographic_level": "municipal",
+        "use_in_pdf": true,
+        "notes": "Útil para complementar rezago educativo."
+      }
+    ]
+  },
+  "banxico_sie": {
+    "description": "Series económicas del Sistema de Información Económica de Banxico.",
+    "status": "available_with_token",
+    "priority": "medium",
+    "candidate_topics": [
+      {
+        "name": "Remesas por entidad federativa",
+        "target_section": "oportunidades",
+        "target_field": "economic_data.remittances_state_mdp",
+        "geographic_level": "state",
+        "use_in_pdf": true,
+        "notes": "Útil para contexto económico estatal; debe evitar presentarse como dato municipal."
+      },
+      {
+        "name": "Tasa de referencia",
+        "target_section": "contexto_macro",
+        "target_field": "economic_data.banxico_reference_rate",
+        "geographic_level": "national",
+        "use_in_pdf": false,
+        "notes": "Útil como validación técnica o contexto macro, no como dato territorial principal."
+      }
+    ]
+  }
+}
