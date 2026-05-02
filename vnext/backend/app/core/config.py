@@ -19,8 +19,13 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
 
+    # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./voxpolitica.db"
     DATABASE_URL_SYNC: str = "sqlite:///./voxpolitica.db"
+
+    # CORS / frontend
+    FRONTEND_URL: str = "http://localhost:3000"
+    BACKEND_CORS_ORIGINS: str = "http://localhost:3000"
 
     GROQ_API_KEY: str = ""
     GROQ_MODEL: str = "llama-3.3-70b-versatile"
@@ -80,6 +85,29 @@ class Settings(BaseSettings):
         if not 0.1 <= v <= 1.0:
             raise ValueError("Speech/text factors must be between 0.1 and 1.0")
         return v
+
+    @property
+    def database_url(self) -> str:
+        return self.DATABASE_URL
+
+    @property
+    def database_url_sync(self) -> str:
+        return self.DATABASE_URL_SYNC
+
+    @property
+    def cors_origins(self) -> list[str]:
+        raw_origins = self.BACKEND_CORS_ORIGINS or self.FRONTEND_URL
+
+        origins = [
+            origin.strip()
+            for origin in raw_origins.split(",")
+            if origin.strip()
+        ]
+
+        if self.FRONTEND_URL and self.FRONTEND_URL not in origins:
+            origins.append(self.FRONTEND_URL)
+
+        return origins
 
     @property
     def is_production(self) -> bool:

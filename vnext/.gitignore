@@ -1,9 +1,51 @@
-**/.env
-**/.env.*
-**/*.env
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
+# Environments
+.env
+.env.*
+!.env.example
+venv/
+.venv/
 
-**/env/
-**/.venv/
-**/venv/
-frontend/node_modules/
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+voxpolitica.db
+
+# Backend generated files
+backend/*.pdf
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Archives / extracted copies
+*.tar
+*.tar.xz
+*.zip
+vnext_2/
